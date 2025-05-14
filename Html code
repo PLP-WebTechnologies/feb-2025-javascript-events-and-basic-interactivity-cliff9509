@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Bundle of Joy</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Interactive Web Page</h1>
+    </header>
+
+    <section id="event-handling">
+        <h2>Event Handling</h2>
+        <button id="myButton">Click Me!</button>
+        <p id="hoverParagraph">Hover over me!</p>
+        <input type="text" id="keyInput" placeholder="Press a key here">
+        <p id="keyOutput"></p>
+        <button id="secretButton">Double-Click or Long Press Me!</button>
+        <p id="secretMessage" class="hidden">🔥 Secret Action Triggered! 🔥</p>
+    </section>
+
+    <section id="interactive-elements">
+        <h2>Interactive Elements</h2>
+
+        <div class="interactive-button-container">
+            <button id="colorChangerButton">Change My Color and Text</button>
+        </div>
+
+        <div class="gallery-container">
+            <h3>Image Gallery</h3>
+            <img id="galleryImage" src="https://via.placeholder.com/400x200?text=Image+1" alt="Gallery Image">
+            <div class="gallery-controls">
+                <button id="prevImage">Previous</button>
+                <button id="nextImage">Next</button>
+            </div>
+        </div>
+
+        <div class="accordion-container">
+            <h3>Accordion</h3>
+            <div class="accordion-item">
+                <div class="accordion-header">Section 1</div>
+                <div class="accordion-content hidden">
+                    <p>This is the content for section 1.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">Section 2</div>
+                <div class="accordion-content hidden">
+                    <p>This is the content for section 2.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header">Section 3</div>
+                <div class="accordion-content hidden">
+                    <p>This is the content for section 3.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="form-validation">
+        <h2>Form Validation</h2>
+        <form id="myForm">
+            <div class="form-group">
+                <label for="name">Name (Required):</label>
+                <input type="text" id="name" required>
+                <span class="error-message" id="nameError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email">
+                <span class="error-message" id="emailError"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password (Min 8 characters):</label>
+                <input type="password" id="password">
+                <span class="error-message" id="passwordError"></span>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
