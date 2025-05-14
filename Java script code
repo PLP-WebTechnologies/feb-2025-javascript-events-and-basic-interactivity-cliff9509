@@ -1,0 +1,224 @@
+document.addEventListener('DOMContentLoaded', () => {
+
+    // 1. Event Handling 🎈
+
+    // Button click
+    const myButton = document.getElementById('myButton');
+    myButton.addEventListener('click', () => {
+        alert('Button Clicked!');
+    });
+
+    // Hover effects (using CSS for the basic effect, but showing JS for more complex)
+    const hoverParagraph = document.getElementById('hoverParagraph');
+    hoverParagraph.addEventListener('mouseover', () => {
+        // You could add more complex effects here with JS
+        // hoverParagraph.style.color = 'blue';
+    });
+    hoverParagraph.addEventListener('mouseout', () => {
+        // hoverParagraph.style.color = '#333';
+    });
+
+    // Keypress detection
+    const keyInput = document.getElementById('keyInput');
+    const keyOutput = document.getElementById('keyOutput');
+    keyInput.addEventListener('keydown', (event) => {
+        keyOutput.textContent = `Key Pressed: ${event.key}`;
+        // Bonus: Secret action on a specific key
+        if (event.key === 's') {
+            document.getElementById('secretMessage').classList.remove('hidden');
+        } else {
+             document.getElementById('secretMessage').classList.add('hidden');
+        }
+    });
+
+    // Bonus: Secret action for double-click or long press
+    const secretButton = document.getElementById('secretButton');
+    const secretMessage = document.getElementById('secretMessage');
+    let pressTimer;
+
+    secretButton.addEventListener('dblclick', () => {
+        secretMessage.textContent = '🤫 Secret Action: Double Click! 🤫';
+        secretMessage.classList.remove('hidden');
+        setTimeout(() => {
+            secretMessage.classList.add('hidden');
+        }, 2000); // Hide after 2 seconds
+    });
+
+    secretButton.addEventListener('mousedown', () => {
+        pressTimer = setTimeout(() => {
+            secretMessage.textContent = '🤫 Secret Action: Long Press! 🤫';
+            secretMessage.classList.remove('hidden');
+        }, 1000); // Consider a press of 1 second or more a long press
+    });
+
+    secretButton.addEventListener('mouseup', () => {
+        clearTimeout(pressTimer);
+         // If the secret message is shown from a long press, hide it after a delay
+        if (!secretMessage.classList.contains('hidden') && secretMessage.textContent.includes('Long Press')) {
+             setTimeout(() => {
+                secretMessage.classList.add('hidden');
+            }, 2000);
+        }
+    });
+
+     secretButton.addEventListener('mouseleave', () => {
+        clearTimeout(pressTimer);
+         // If the secret message is shown from a long press, hide it after a delay
+        if (!secretMessage.classList.contains('hidden') && secretMessage.textContent.includes('Long Press')) {
+             setTimeout(() => {
+                secretMessage.classList.add('hidden');
+            }, 2000);
+        }
+    });
+
+
+    // 2. Interactive Elements 🎮
+
+    // Button that changes text or color
+    const colorChangerButton = document.getElementById('colorChangerButton');
+    colorChangerButton.addEventListener('click', () => {
+        if (colorChangerButton.textContent === 'Change My Color and Text') {
+            colorChangerButton.textContent = 'Click Again!';
+            colorChangerButton.style.backgroundColor = '#337ab7'; // Blue
+        } else {
+            colorChangerButton.textContent = 'Change My Color and Text';
+            colorChangerButton.style.backgroundColor = '#f0ad4e'; // Orange
+        }
+         // Bonus: Add animation
+        colorChangerButton.classList.add('animated');
+        setTimeout(() => {
+            colorChangerButton.classList.remove('animated');
+        }, 1000); // Remove animation class after 1 second (matches animation duration)
+    });
+
+    // An image gallery or slideshow
+    const galleryImage = document.getElementById('galleryImage');
+    const prevImageButton = document.getElementById('prevImage');
+    const nextImageButton = document.getElementById('nextImage');
+    const images = [
+        'https://via.placeholder.com/400x200?text=Image+1',
+        'https://via.placeholder.com/400x200?text=Image+2',
+        'https://via.placeholder.com/400x200?text=Image+3',
+        'https://via.placeholder.com/400x200?text=Image+4'
+    ];
+    let currentImageIndex = 0;
+
+    nextImageButton.addEventListener('click', () => {
+        currentImageIndex = (currentImageIndex + 1) % images.length;
+        galleryImage.src = images[currentImageIndex];
+    });
+
+    prevImageButton.addEventListener('click', () => {
+        currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+        galleryImage.src = images[currentImageIndex];
+    });
+
+    // Tabs or accordion-style content (Implementing Accordion)
+    const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+    accordionHeaders.forEach(header => {
+        header.addEventListener('click', () => {
+            const content = header.nextElementSibling;
+            const isHidden = content.classList.contains('hidden');
+
+            // Close all other open accordion items
+            document.querySelectorAll('.accordion-content').forEach(item => {
+                item.classList.add('hidden');
+            });
+
+            // Toggle the clicked item's content
+            if (isHidden) {
+                content.classList.remove('hidden');
+            }
+        });
+    });
+
+    // 3. Form Validation 📋✅
+
+    const myForm = document.getElementById('myForm');
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const nameError = document.getElementById('nameError');
+    const emailError = document.getElementById('emailError');
+    const passwordError = document.getElementById('passwordError');
+
+    // Function to validate email format
+    const isValidEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
+
+    // Function to validate password rules (min 8 characters)
+    const isValidPassword = (password) => {
+        return password.length >= 8;
+        // You can add more complex rules here, e.g., using regex for
+        // const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/; // Minimum 8 characters, at least one letter and one number
+        // return passwordRegex.test(password);
+    };
+
+    // Real-time feedback while typing
+    nameInput.addEventListener('input', () => {
+        if (nameInput.value.trim() === '') {
+            nameError.textContent = 'Name is required.';
+        } else {
+            nameError.textContent = ''; // Clear error
+        }
+    });
+
+    emailInput.addEventListener('input', () => {
+        if (emailInput.value.trim() !== '' && !isValidEmail(emailInput.value)) {
+            emailError.textContent = 'Invalid email format.';
+        } else {
+            emailError.textContent = ''; // Clear error
+        }
+    });
+
+    passwordInput.addEventListener('input', () => {
+         if (passwordInput.value.trim() !== '' && !isValidPassword(passwordInput.value)) {
+            passwordError.textContent = 'Password must be at least 8 characters long.';
+        } else {
+            passwordError.textContent = ''; // Clear error
+        }
+    });
+
+
+    // Form submission validation
+    myForm.addEventListener('submit', (event) => {
+        let isValid = true;
+
+        // Required field check for Name
+        if (nameInput.value.trim() === '') {
+            nameError.textContent = 'Name is required.';
+            isValid = false;
+        } else {
+            nameError.textContent = '';
+        }
+
+        // Email format validation (only if something is entered)
+        if (emailInput.value.trim() !== '' && !isValidEmail(emailInput.value)) {
+            emailError.textContent = 'Invalid email format.';
+            isValid = false;
+        } else {
+            emailError.textContent = '';
+        }
+
+        // Password rules validation (only if something is entered)
+         if (passwordInput.value.trim() !== '' && !isValidPassword(passwordInput.value)) {
+            passwordError.textContent = 'Password must be at least 8 characters long.';
+            isValid = false;
+        } else {
+            passwordError.textContent = '';
+        }
+
+
+        if (!isValid) {
+            event.preventDefault(); // Prevent form submission if invalid
+            alert('Please fix the errors in the form.');
+        } else {
+            alert('Form submitted successfully!');
+            // You would typically send form data to a server here
+        }
+    });
+
+});
